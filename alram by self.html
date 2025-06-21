@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .mainbody{
+            width:300px;
+            margin:auto;
+            text-align:center;
+            border:1PX solid black;
+            border-radius:10px;
+            margin-top:10%;
+            background-color:#00c1b5;
+            
+            
+            
+           
+            
+            
+        }
+     img{
+       height:200px;
+       width:300px;
+       padding-top:10px 10px;
+}
+      input{
+        font-size:1rem;
+        border-radius:10px;
+        border:1px solid black;
+        outline: none;
+        width:30%;
+        margin-bottom:10px;
+        margin:10px;
+      }
+      button{
+        font-size:1rem;
+        border-radius:10px;
+        border:1px solid black;
+        outline: none;
+        font-size:22px;
+        height:35px;
+        width:160px;
+        margin:10px;
+        cursor:pointer;
+        margin-bottom:10px;
+        background-color: rgb(17, 17, 232);
+        color:white;
+
+
+      }
+    </style>
+</head>
+<body>
+    <div class="mainbody"> 
+        <div>
+<img src="irfanimage-ezgif.com-gif-maker.png" alt="" id="alarmImage">
+</div>
+<h1 id="htmltime">00:00:00</h1>
+<h3>ALARM AT: <span id="setAlarmTime"></span></h3>
+<form>
+<input type="number" name="" id="hours" placeholder="HOURS">
+<input type="number" name="" id="minutes" placeholder="MINUTES">
+</form>
+<div>
+    <button onclick="alarmTime()">SET ALARM</button>
+    <button style="background-color: red;" onclick="stop()">STOP ALARM</button>
+    <audio src="alarm_r.mp3"id="alarmsound"></audio>
+</div>
+    </div>
+</body>
+<script>
+    setInterval(() => {
+        let timeform=new Date();
+        htmltime.innerHTML=timeform.toLocaleTimeString()
+
+    },500);
+    function alarmTime(){
+        let h = hours.value;
+        let m = minutes.value;
+        setAlarmTime.innerHTML=h+":"+m+":00"
+    }
+    let checkInterval=setInterval(()=>{
+        let alarmTime=setAlarmTime.innerHTML;
+        alarmTime=alarmTime.split(":");
+        let alarmhours=alarmTime[0];
+        let alarmminutes=alarmTime[1];
+        let systemtime=new Date();
+        let systemhours=systemtime.getHours();
+        let systemminutes=systemtime.getMinutes();
+        if(systemhours>12){
+            systemhours=systemhours-12;
+        }
+       if(alarmhours==systemhours && alarmminutes==systemminutes){
+        alarmImage.src="remove.png"
+        alarmsound.play();
+        clearInterval(checkInterval);
+        alarmsound.loop="true";
+       }
+    },1000)
+    function stop(){
+        alarmsound.pause();
+        alarmImage.src="irfanimage-ezgif.com-gif-maker.png";
+        alarmsound.currentTime = 0;
+        
+    }
+</script>
+</html>
